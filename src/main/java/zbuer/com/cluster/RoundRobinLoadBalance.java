@@ -9,6 +9,19 @@ import java.util.concurrent.ConcurrentMap;
  * 轮询负载均衡
  * <pre>
  *     筛选出比当前权重大的invokers,对length取模，获取最终的invoker
+ *     算法步奏:
+ *     1）获取轮询key  服务名+方法名
+ *          获取可供调用的invokers个数length
+ *          设置最大权重的默认值maxWeight=0
+ *          设置最小权重的默认值minWeight=Integer.MAX_VALUE
+ *     2）遍历所有Inokers，比较出得出maxWeight和minWeight
+ *     3）如果权重是不一样的
+ *          根据key获取自增序列
+ *          自增序列加一与最大权重取模默认得到currentWeigth
+ *          遍历所有invokers筛选出大于currentWeight的invokers
+ *          设置可供调用的invokers的个数length
+ *     4）自增序列加一并与length取模，从invokers获取invoke
+ *
  * </pre>
  *
  * @author buer
