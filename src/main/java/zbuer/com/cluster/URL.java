@@ -125,4 +125,36 @@ public final class URL implements Serializable {
 		getNumbers().put(key, result);
 		return result;
 	}
+
+	public String getServiceKey(){
+		String inf = getServiceInterface();
+		if(inf == null) return null;
+		StringBuffer buf = new StringBuffer();
+		String group  = getParameter(Constants.GROUP_KEY);
+		if(group != null && group.length() > 0 ){
+			buf.append(group).append("/");
+		}
+		buf.append(inf);
+		String version = getParameter(Constants.VERSION_KEY);
+		if(version != null && version.length() > 0 ){
+			buf.append(":").append(version);
+		}
+		return buf.toString();
+
+
+
+
+	}
+
+	public String getServiceInterface() {
+		return getParameter(Constants.INTERFACE_KEY, path);
+	}
+
+	public String getParameter(String key, String defaultValue) {
+		String value = getParameter(key);
+		if(value == null || value.length() == 0){
+			return defaultValue;
+		}
+		return value;
+	}
 }
