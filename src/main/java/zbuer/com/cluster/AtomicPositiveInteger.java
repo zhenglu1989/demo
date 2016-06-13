@@ -68,7 +68,7 @@ public class AtomicPositiveInteger extends Number{
 	}
 
 	public static void main(String[] args) {
-		AtomicInteger	i = new AtomicInteger(1);
+		AtomicInteger	i = new AtomicInteger(2);
 		int current = i.get();
 		System.out.println(current);
 		int next = (current >= Integer.MAX_VALUE ? 0 : current + 1);
