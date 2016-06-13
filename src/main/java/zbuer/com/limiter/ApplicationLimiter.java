@@ -65,28 +65,4 @@ public class ApplicationLimiter {
 		}
 
 	}
-
-	public static void main(String[] args) throws Exception {
-		LoadingCache<Long, AtomicLong> counter = CacheBuilder.newBuilder().expireAfterWrite(2, TimeUnit.SECONDS)
-		                                                     .build(new CacheLoader<Long, AtomicLong>() {
-
-			                                                     @Override
-			                                                     public AtomicLong load(Long key) throws Exception {
-				                                                     return new AtomicLong(0);
-			                                                     }
-		                                                     });
-
-		for (int i = 0; i < 2000; i++) {
-			long currentSeconds = System.currentTimeMillis() / 1000;
-			System.out.println("current :" + currentSeconds);
-			System.out.println(counter.get(currentSeconds).incrementAndGet());
-			if(counter.get(currentSeconds).incrementAndGet()  > 1000){
-				System.out.println("限流啦啦");
-				Thread.sleep(1000);
-			}
-
-		}
-
-	}
-
 }
